@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Sqlite" database="Sqlite" id="08965973-949d-41c4-94ed-bed60b4ab21e" >
+	<schema name="Default" >
+		<table name="AssociationPlayer" prior="Association" virtual="y" >
+			<column name="PlayerID" prior="AssnID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="AssnStartIndex" type="INTEGER" jt="4" />
+			<column name="AssnStartHcp" type="INTEGER" jt="4" />
+			<column name="AssnDivision" type="INTEGER" jt="4" />
+			<index name="pk_Association" unique="PRIMARY_KEY" >
+				<column name="PlayerID" />
+			</index>
+			<fk name="fk_AssociationPlayer" to_schema="Default" to_table="Person File" >
+				<fk_column name="PlayerID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="GolfPlayer" prior="GolfPlay" virtual="y" >
+			<column name="GolfStartIndex" type="NUMERIC" jt="2" />
+			<column name="GolfHcp" type="NUMERIC" length="1" decimal="1" jt="2" />
+			<column name="GolfDivision" prior="GoldDivision" type="NUMERIC" jt="2" />
+			<column name="PlayerID" prior="GolfID" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_GolfPlayer" unique="PRIMARY_KEY" >
+				<column name="PlayerID" />
+			</index>
+			<fk name="fk_GolfPlayer_0" to_schema="Default" to_table="Person File" >
+				<fk_column name="PlayerID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="LawnsFile" prior="LawnsFil" >
+			<column name="LawnID" prior="TournID" type="INTEGER" jt="4" mandatory="y" />
+			<fk name="fk_LawnsFile" to_schema="Default" to_table="TournFile" >
+				<fk_column name="LawnID" pk="LawnID" />
+			</fk>
+		</table>
+		<table name="Person File" prior="Person Fil" virtual="y" >
+			<column name="PersonID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="PersonSurname" type="CHAR" length="20" jt="1" mandatory="y" />
+			<column name="PersonForename" type="CHAR" length="30" jt="1" mandatory="y" />
+			<column name="Salutation" type="CHAR" length="10" jt="1" />
+			<column name="FlatNumber" type="INTEGER" jt="4" />
+			<column name="StreetNumber" type="INTEGER" jt="4" />
+			<column name="StreetName" type="CHAR" length="30" jt="1" />
+			<column name="Town, City, Suburb, Area" type="CHAR" length="30" jt="1" />
+			<column name="PostCode" type="INT" jt="4" />
+			<column name="Address (Other)" type="CHAR" length="100" jt="1" />
+			<column name="Mobile" type="NUMERIC" length="10" jt="2" />
+			<column name="HomePhone" type="NUMERIC" length="10" jt="2" />
+			<column name="ContactName" type="CHAR" length="35" jt="1" mandatory="y" />
+			<column name="ContactPhone" type="NUMERIC" jt="2" mandatory="y" />
+			<column name="VolunteerID" type="INTEGER" jt="4" />
+			<column name="TournID" type="INTEGER" jt="4" virtual="y" />
+			<column name="PlayerID" type="INTEGER" jt="4" />
+			<index name="pk_Person File" unique="PRIMARY_KEY" >
+				<column name="PersonID" />
+			</index>
+			<index name="unq_Person File_VolunteerID" unique="UNIQUE_KEY" >
+				<column name="VolunteerID" />
+			</index>
+			<index name="unq_Person File_PlayerID" unique="UNIQUE_KEY" >
+				<column name="PlayerID" />
+			</index>
+			<index name="unq_Person File_TournID" unique="UNIQUE_KEY" virtual="y" >
+				<column name="TournID" />
+			</index>
+		</table>
+		<table name="Ricochet Player" prior="Ricochet Play" virtual="y" >
+			<column name="PlayerID" prior="RicochetID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="RicStartIndex" type="INTEGER" jt="4" />
+			<column name="RicochetStartHCP" type="INTEGER" jt="4" />
+			<column name="RicochetDivision" type="INTEGER" jt="4" />
+			<index name="pk_Ricochet Player" unique="PRIMARY_KEY" >
+				<column name="PlayerID" />
+			</index>
+		</table>
+		<table name="Tbl" />
+		<table name="TournApplication" prior="TournApplicatio" virtual="y" >
+			<column name="PlayerID" type="INTEGER" jt="4" mandatory="y" virtual="y" />
+			<column name="TournamentFee" type="DECIMAL" length="2" jt="3" virtual="y" />
+			<column name="MealFee" type="DECIMAL" length="2" jt="3" virtual="y" />
+			<column name="PaymentTypeID" type="INTEGER" jt="4" />
+		</table>
+		<table name="TournFile" prior="TournFil" virtual="y" >
+			<comment><![CDATA[If more than one style (Association, Golf or Ricochet) are to be played over a period. A seperate File Should be made for each style. 
+If more than ont type (Knockout, Level Play or other is played. A seperate file should be made for each.
+Handicap Games should be on a seperate file to Level Play Games.
+Doubles and Single Matches should also be seperate.
+If a Tournament or Pennant is being played with multiples of the above over a period seperate results can be amagamated to show aggegate score.]]></comment>
+			<column name="TournID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="TournName" type="ENUM" jt="12" mandatory="y" />
+			<column name="TournStart" type="DATE" jt="91" />
+			<column name="TournEnd" type="DATE" jt="91" />
+			<column name="TournLocation" type="DATE" jt="91" />
+			<column name="TournAddress" type="ENUM" jt="12" />
+			<column name="TournTown" type="ENUM" jt="12" />
+			<column name="TournPostCode" type="ENUM" jt="12" />
+			<column name="TournPhone" type="ENUM" jt="12" />
+			<column name="TournEmail" type="INTEGER" jt="4" />
+			<column name="TournMobile" type="INTEGER" jt="4" />
+			<column name="TournStyle" type="CHAR" length="2" jt="1" >
+				<comment><![CDATA[Association (A), Golf (G), Ricochet (R)]]></comment>
+			</column>
+			<column name="TournType" type="CHAR" length="2" jt="1" >
+				<comment><![CDATA[Knockout (K), Round Robin (R), Special (S)]]></comment>
+			</column>
+			<column name="TournHcpLevel" type="CHAR" length="2" jt="1" >
+				<comment><![CDATA[Handicap (H), Level Play (L)]]></comment>
+			</column>
+			<column name="TournDoubSing" type="CHAR" length="2" jt="1" >
+				<comment><![CDATA[Doubles (D), Singles (S)]]></comment>
+			</column>
+			<column name="LawnID" type="INTEGER" jt="4" />
+			<index name="pk_TournFile" unique="PRIMARY_KEY" >
+				<column name="TournID" />
+			</index>
+			<index name="unq_TournFile_LawnID" unique="UNIQUE_KEY" >
+				<column name="LawnID" />
+			</index>
+			<fk name="fk_TournFile" virtual="y" to_schema="Default" to_table="Person File" >
+				<fk_column name="TournID" pk="TournID" />
+			</fk>
+		</table>
+		<table name="Volunteer File" prior="Volunteer Fil" virtual="y" >
+			<column name="VolunteerID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="Job Desciption" type="CHAR" length="20" jt="1" />
+			<column name="Division" type="CHAR" length="15" jt="1" >
+				<comment><![CDATA[Being Ground Staff, Kitchen Staff, Umpiring, Management, General Hand]]></comment>
+			</column>
+			<index name="pk_Volunteer File" unique="PRIMARY_KEY" >
+				<column name="VolunteerID" />
+			</index>
+			<fk name="fk_Volunteer File" to_schema="Default" to_table="Person File" >
+				<fk_column name="VolunteerID" pk="VolunteerID" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Main Diagram" id="bad5b8b9-7a5d-41de-80a1-e66691d20fb1" show_relation="columns" >
+		<entity schema="Default" name="Volunteer File" color="C1D8EE" x="1140" y="361" />
+		<entity schema="Default" name="GolfPlayer" color="C1D8EE" x="456" y="304" />
+		<entity schema="Default" name="AssociationPlayer" color="C1D8EE" x="437" y="456" />
+		<entity schema="Default" name="Ricochet Player" color="C1D8EE" x="456" y="608" />
+		<entity schema="Default" name="TournApplication" color="C1D8EE" x="133" y="589" />
+		<entity schema="Default" name="LawnsFile" color="C1D8EE" x="361" y="152" />
+		<entity schema="Default" name="TournFile" color="C1D8EE" x="114" y="209" />
+		<entity schema="Default" name="Person File" color="C1D8EE" x="741" y="152" />
+		<callout x="57" y="57" pointer="Round" >
+			<comment><![CDATA[Create new tables by right-clicking the diagram.
+Double-click the table headers, columns, or foreign keys to edit.
+The schema structure will be saved to the design model file.]]></comment>
+		</callout>
+	</layout>
+</project>
